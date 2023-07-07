@@ -1,0 +1,25 @@
+.home-writing {
+  color: #fff;
+  background-color: #0c0c0c;
+  padding: 10px;
+  font-size: 4.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  margin: auto;
+  max-width: 1000px;
+}
+
+.canvas-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.home-writing {
+  position: relative;
+  z-index: 1;
+}
