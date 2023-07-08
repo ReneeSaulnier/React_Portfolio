@@ -17,7 +17,7 @@ const IconBar = () => {
   ];
 
   return (
-    <Box sx={{ position: 'fixed', left: 0, top: '40%', transform: 'translateY(-50%)' }}>
+    <Box sx={{ position: 'fixed', left: 0, top: '40%', transform: 'translateY(-50%)', zIndex: 1 }}>
       <CssBaseline />
       <AppBar component="nav" sx={{ backgroundColor: '#181818' }}>
         <Toolbar>
