@@ -1,19 +1,22 @@
 import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 
 const TextLetters = ({ text, position, mouseEnter, mouseLeave, hoveredLetter }) => {
   const textRef = useRef();
+  const { size } = useThree();
+
+  const fontSize = size.width * 0.0003;
 
   useFrame(({ raycaster }) => {
-    raycaster.setFromCamera(mouseEnter, textRef.current.parent);
     const intersects = raycaster.intersectObject(textRef.current);
     const isIntersecting = intersects.length > 0;
 
     if (isIntersecting && text === hoveredLetter) {
-      textRef.current.material.color.set(0xffcc00); 
+      textRef.current.material.color.set(0xffcc00);
     } else {
-      textRef.current.material.color.set(0xffffff); 
+      textRef.current.material.color.set(0xffffff);
     }
   });
 
@@ -21,10 +24,8 @@ const TextLetters = ({ text, position, mouseEnter, mouseLeave, hoveredLetter }) 
     <Text
       ref={textRef}
       position={position}
-      fontSize={0.5}
-      maxWidth={200}
-      lineHeight={1}
-      letterSpacing={0.02}
+      fontSize={fontSize}
+      size={fontSize * 0.1}
       font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwIYqWqZPBQ.ttf"
       onPointerEnter={() => mouseEnter(text)}
       onPointerLeave={() => mouseLeave()}
@@ -45,27 +46,35 @@ const Experience = () => {
     setHoveredLetter('');
   };
 
-  const handleMouseMove = (event) => {
-    // handle mouse movement
-  };
+  const name = [
+    'H', 'i', ',', ' ', 'I', "'", 'm', ' ', 'R', 'e', 'n', 'e', 'e', '!'
+  ];
 
-  const letters = [
-    'H', 'i', ',', ' ', 'I', "'", 'm', ' ', 'R', 'e', 'n', 'e', 'e', '!', '\n', 'I', "'", 'm', ' ',
+  const description = [
+    'I', "'", 'm', ' ',
     'a', ' ', 'J', 'u', 'n', 'i', 'o', 'r', ' ', 'S', 'o', 'f', 't', 'w', 'a', 'r', 'e', ' ', 'D', 'e', 'v',
     'e', 'l', 'o', 'p', 'e', 'r', '.'
   ];
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-      <Canvas
-        onMouseMove={handleMouseMove}
-      >
+      <Canvas>
         <group>
-          {letters.map((letter, index) => (
+          {name.map((letter, index) => (
             <TextLetters
               key={index}
               text={letter}
-              position={[-(letters.length -38 - index) * 0.3, 1, 0]}
+              position={[-(name.length - index) * 0.3, 1, -1]}
+              mouseEnter={handleMouseEnter}
+              mouseLeave={handleMouseLeave}
+              hoveredLetter={hoveredLetter}
+            />
+          ))}
+          {description.map((letter, index) => (
+            <TextLetters
+              key={index}
+              text={letter}
+              position={[-(description.length - 17.6 - index) * 0.31, 0, -1]}
               mouseEnter={handleMouseEnter}
               mouseLeave={handleMouseLeave}
               hoveredLetter={hoveredLetter}
